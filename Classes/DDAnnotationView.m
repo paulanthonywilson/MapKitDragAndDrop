@@ -100,11 +100,6 @@
         CLLocationCoordinate2D newCoordinate = [_mapView convertPoint:newCenter toCoordinateFromView:self.superview];
 		
         [theAnnotation changeCoordinate:newCoordinate];
-
-		// Try to reverse geocode here
-		MKReverseGeocoder *reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:newCoordinate];
-		reverseGeocoder.delegate = self;
-		[reverseGeocoder start];
 		
         // Clean up the state information.
         _startLocation = CGPointZero;
@@ -128,29 +123,6 @@
     } else {
         [super touchesCancelled:touches withEvent:event];		
 	}
-}
-
-#pragma mark -
-#pragma mark CLLocationManagerDelegate methods
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
-	
-	DDAnnotation* theAnnotation = (DDAnnotation *)self.annotation;
-	theAnnotation.placemark = placemark;
-
-	// TODO: MapKit Notification not working, possible bug.
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MKAnnotationCalloutInfoDidChangeNotification" object:self];
-	
-	geocoder.delegate = nil;
-	[geocoder release];
-}
-
-- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error {
-	DDAnnotation* theAnnotation = (DDAnnotation *)self.annotation;
-	theAnnotation.placemark = nil;
-	
-	geocoder.delegate = nil;
-	[geocoder release];
 }
 
 @end

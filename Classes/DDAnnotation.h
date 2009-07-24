@@ -28,14 +28,12 @@
 
 #import <MapKit/MapKit.h>
 
-@interface DDAnnotation : NSObject <MKAnnotation> {
+@interface DDAnnotation : NSObject <MKAnnotation, MKReverseGeocoderDelegate> {
 @private
 	CLLocationCoordinate2D _coordinate;
 	NSString *_title;
 	MKPlacemark *_placemark;
 }
-
-@property (nonatomic, assign) MKPlacemark *placemark;
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title;
 - (void)changeCoordinate:(CLLocationCoordinate2D)coordinate;

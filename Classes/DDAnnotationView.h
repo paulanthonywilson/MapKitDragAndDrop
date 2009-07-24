@@ -29,7 +29,7 @@
 #import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface DDAnnotationView : MKPinAnnotationView <MKReverseGeocoderDelegate> {
+@interface DDAnnotationView : MKPinAnnotationView {
 @private	
     BOOL _isMoving;
     CGPoint _startLocation;

@@ -34,7 +34,6 @@
 @implementation DDAnnotation
 
 @synthesize coordinate = _coordinate; // property declared in MKAnnotation.h
-@synthesize placemark = _placemark;
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title {
 	if (self = [super init]) {
@@ -68,7 +67,29 @@
 #pragma mark Change coordinate
 
 - (void)changeCoordinate:(CLLocationCoordinate2D)coordinate {
-	_coordinate = coordinate;	
+	_coordinate = coordinate;
+	
+	// Try to reverse geocode here
+	MKReverseGeocoder *reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:_coordinate];
+	reverseGeocoder.delegate = self;
+	[reverseGeocoder start];	
+}
+
+#pragma mark -
+#pragma mark CLLocationManagerDelegate methods
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
+
+	_placemark = placemark;
+	
+	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"MKAnnotationCalloutInfoDidChangeNotification" object:self]];
+	
+	[geocoder release];
+}
+
+- (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error {
+	_placemark = nil;
+	[geocoder release];
 }
 
 #pragma mark -
