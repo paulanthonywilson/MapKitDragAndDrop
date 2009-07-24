@@ -19,7 +19,7 @@
 		77D3F09C1019E577008E062F /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D3F09B1019E577008E062F /* MapKit.framework */; };
 		77D3F0F21019EB49008E062F /* DDAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D3F0F11019EB49008E062F /* DDAnnotation.m */; };
 		77D3F13E1019F5D1008E062F /* DDAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D3F13D1019F5D1008E062F /* DDAnnotationView.m */; };
-		77D3F1441019FF08008E062F /* mobileme_32.png in Resources */ = {isa = PBXBuildFile; fileRef = 77D3F1431019FF08008E062F /* mobileme_32.png */; };
+		77D3F359101A3EB2008E062F /* digdog.png in Resources */ = {isa = PBXBuildFile; fileRef = 77D3F358101A3EB2008E062F /* digdog.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +41,7 @@
 		77D3F0F11019EB49008E062F /* DDAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAnnotation.m; sourceTree = "<group>"; };
 		77D3F13C1019F5D1008E062F /* DDAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DDAnnotationView.h; sourceTree = "<group>"; };
 		77D3F13D1019F5D1008E062F /* DDAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DDAnnotationView.m; sourceTree = "<group>"; };
-		77D3F1431019FF08008E062F /* mobileme_32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mobileme_32.png; path = Resources/mobileme_32.png; sourceTree = "<group>"; };
+		77D3F358101A3EB2008E062F /* digdog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = digdog.png; path = Resources/digdog.png; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MapKitDragAndDrop-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "MapKitDragAndDrop-Info.plist"; path = "Resources/MapKitDragAndDrop-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,7 +108,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				77D3F1431019FF08008E062F /* mobileme_32.png */,
+				77D3F358101A3EB2008E062F /* digdog.png */,
 				2899E5210DE3E06400AC0155 /* MapKitDragAndDropViewController.xib */,
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
 				8D1107310486CEB800E47090 /* MapKitDragAndDrop-Info.plist */,
@@ -175,7 +175,7 @@
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
 				2899E5220DE3E06400AC0155 /* MapKitDragAndDropViewController.xib in Resources */,
-				77D3F1441019FF08008E062F /* mobileme_32.png in Resources */,
+				77D3F359101A3EB2008E062F /* digdog.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

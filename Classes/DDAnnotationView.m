@@ -44,7 +44,7 @@
 		self.multipleTouchEnabled = NO;
 		self.animatesDrop = YES;
 		
-		UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"mobileme_32.png"]];
+		UIImageView *leftIconView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"digdog.png"]];
 		self.leftCalloutAccessoryView = leftIconView;
 		[leftIconView release];
 

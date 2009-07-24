@@ -93,11 +93,7 @@
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
 {
 	if ([control isKindOfClass:[UIButton class]]) {
-		UIButton *button = (UIButton *)control;
-		if (button.buttonType == UIButtonTypeDetailDisclosure) {
-			// Bring up Detail View Controller
-			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://hollowout.blogspot.com"]];
-		}
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://hollowout.blogspot.com"]];
 	}
 }
 
