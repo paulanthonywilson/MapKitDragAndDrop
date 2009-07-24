@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];	
 
+	_mapView.showsUserLocation = YES;
+
 	// Start by locating current position
 	_locationManager = [[CLLocationManager alloc] init];
 	_locationManager.delegate = self;
@@ -56,7 +58,7 @@
 		return nil;
 	}
 	
-	DDAnnotationView* annotationView = (DDAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
+	DDAnnotationView *annotationView = (DDAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:@"Pin"];
 	if (annotationView == nil) {
 		annotationView = [[[DDAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"Pin"] autorelease];
 	}
