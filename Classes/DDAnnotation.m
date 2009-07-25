@@ -76,7 +76,7 @@
 }
 
 #pragma mark -
-#pragma mark CLLocationManagerDelegate methods
+#pragma mark MKReverseGeocoderDelegate methods
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
 
