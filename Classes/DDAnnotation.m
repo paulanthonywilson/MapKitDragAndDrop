@@ -37,7 +37,7 @@
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title {
 	if (self = [super init]) {
-		_coordinate = coordinate;
+		[self changeCoordinate:coordinate];		
 		_title = [title retain];
 		_placemark = nil;
 	}
