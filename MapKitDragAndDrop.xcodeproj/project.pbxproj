@@ -138,6 +138,7 @@
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
+				7729F305101C03DF0041EEB3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -180,6 +181,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7729F305101C03DF0041EEB3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/ruby;
+			shellScript = "#!/usr/bin/ruby\n# xcode-git-cfbundleversion.rb\n# Update CFBundleVersion in Info.plist file with short Git revision string\n# http://github.com/digdog/xcode-git-cfbundleversion/\n#\n# This is based on\n# http://github.com/jsallis/xcode-git-versioner\n# http://github.com/juretta/iphone-project-tools/tree/v1.0.3\n\n# Fail if not run from Xcode\nraise \"Must be run from Xcode's Run Script Build Phase\" unless ENV['XCODE_VERSION_ACTUAL']\n\n# Get the current git revision hash\nrevision = `/opt/local/bin/git rev-parse --short HEAD`.chomp!\n\nif (revision) \n\t# Update Info.plist file\n\tplistFile = \"#{ENV['BUILT_PRODUCTS_DIR']}/#{ENV['INFOPLIST_PATH']}\"\n\n\t# Convert the binary plist to xml based\n\t`/usr/bin/plutil -convert xml1 #{plistFile}`\n\n\t# Open Info.plist and set the CFBundleVersion value to the \"CFBuildVersion (revision hash)\" format\n\tlines = IO.readlines(plistFile).join\n\tlines.gsub!(/(<key>CFBundleVersion<\\/key>\\n\\t<string>)(\\d+\\.\\d+)(<\\/string>)/, \"\\\\1\\\\2 (#{revision})\\\\3\")\n \n\t# Overwrite the original Info.plist file with our updated version\n\tFile.open(plistFile, 'w') {|f| f.puts lines}\n\n\t# Convert back to binary plist\n\t`/usr/bin/plutil -convert binary1 #{plistFile}`\n\n\t# Report to the user\n\tputs \"CFBundleVersion in #{plistFile} has revision number #{revision}\"\nend";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1D60588E0D05DD3D006BFB54 /* Sources */ = {
