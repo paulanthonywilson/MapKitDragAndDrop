@@ -28,10 +28,17 @@
 
 #import "DDAnnotation.h"
 
+@interface DDAnnotation ()
+@property (nonatomic, retain) MKPlacemark *placemark;
+@end
+
+
 #pragma mark -
 #pragma mark DDAnnotation implementation
 
 @implementation DDAnnotation
+
+@synthesize placemark = _placemark;
 
 @synthesize coordinate = _coordinate; // property declared in MKAnnotation.h
 
@@ -79,8 +86,8 @@
 #pragma mark MKReverseGeocoderDelegate methods
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
-
-	_placemark = placemark;
+	
+	self.placemark = placemark;
 	
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"MKAnnotationCalloutInfoDidChangeNotification" object:self]];
 	
@@ -88,7 +95,7 @@
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error {
-	_placemark = nil;
+	self.placemark = nil;
 	[geocoder release];
 }
 
@@ -97,6 +104,7 @@
 
 - (void)dealloc {
 	[_title release], _title = nil;
+	[_placemark release], _placemark = nil;
 	[super dealloc];
 }
 
