@@ -25,15 +25,24 @@
 //  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
 #import "DDAnnotationView.h"
 #import "DDAnnotation.h"
+
+@interface DDAnnotationView ()
+@property (nonatomic, assign) BOOL isMoving;
+@property (nonatomic, assign) CGPoint startLocation;
+@property (nonatomic, assign) CGPoint originalCenter;
+@end
+
 
 #pragma mark -
 #pragma mark DDAnnotationView implementation
 
 @implementation DDAnnotationView
 
+@synthesize isMoving = _isMoving;
+@synthesize startLocation = _startLocation;
+@synthesize originalCenter = _originalCenter;
 @synthesize mapView = _mapView;
 
 - (id)initWithAnnotation:(id <MKAnnotation>)annotation reuseIdentifier:(NSString *)reuseIdentifier {
@@ -63,8 +72,8 @@
 	
 	// The view is configured for single touches only.
     UITouch* aTouch = [touches anyObject];
-    _startLocation = [aTouch locationInView:[self superview]];
-    _originalCenter = self.center;
+    self.startLocation = [aTouch locationInView:[self superview]];
+    self.originalCenter = self.center;
 	
     [super touchesBegan:touches withEvent:event];
 }
@@ -76,14 +85,14 @@
     CGPoint newCenter;
 	
 	// If the user's finger moved more than 5 pixels, begin the drag.
-    if ((abs(newLocation.x - _startLocation.x) > 5.0) || (abs(newLocation.y - _startLocation.y) > 5.0)) {
-		_isMoving = YES;		
+    if ((abs(newLocation.x - self.startLocation.x) > 5.0) || (abs(newLocation.y - self.startLocation.y) > 5.0)) {
+		self.isMoving = YES;		
 	}
 	
 	// If dragging has begun, adjust the position of the view.
-    if (_isMoving) {
-        newCenter.x = _originalCenter.x + (newLocation.x - _startLocation.x);
-        newCenter.y = _originalCenter.y + (newLocation.y - _startLocation.y);
+    if (self.isMoving) {
+        newCenter.x = self.originalCenter.x + (newLocation.x - self.startLocation.x);
+        newCenter.y = self.originalCenter.y + (newLocation.y - self.startLocation.y);
         self.center = newCenter;
     } else {
 		// Let the parent class handle it.
@@ -93,18 +102,18 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 
-    if (_isMoving) {
+    if (self.isMoving) {
         // Update the map coordinate to reflect the new position.
         CGPoint newCenter = self.center;
         DDAnnotation* theAnnotation = (DDAnnotation *)self.annotation;
-        CLLocationCoordinate2D newCoordinate = [_mapView convertPoint:newCenter toCoordinateFromView:self.superview];
+        CLLocationCoordinate2D newCoordinate = [self.mapView convertPoint:newCenter toCoordinateFromView:self.superview];
 		
         [theAnnotation changeCoordinate:newCoordinate];
 		
         // Clean up the state information.
-        _startLocation = CGPointZero;
-        _originalCenter = CGPointZero;
-        _isMoving = NO;
+        self.startLocation = CGPointZero;
+        self.originalCenter = CGPointZero;
+        self.isMoving = NO;
     } else {
         [super touchesEnded:touches withEvent:event];		
 	}
@@ -112,14 +121,14 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
 
-    if (_isMoving) {
+    if (self.isMoving) {
         // Move the view back to its starting point.
-        self.center = _originalCenter;
+        self.center = self.originalCenter;
 		
         // Clean up the state information.
-        _startLocation = CGPointZero;
-        _originalCenter = CGPointZero;
-        _isMoving = NO;
+        self.startLocation = CGPointZero;
+        self.originalCenter = CGPointZero;
+        self.isMoving = NO;
     } else {
         [super touchesCancelled:touches withEvent:event];		
 	}

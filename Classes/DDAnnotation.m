@@ -29,6 +29,7 @@
 #import "DDAnnotation.h"
 
 @interface DDAnnotation ()
+@property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) MKPlacemark *placemark;
 @end
 
@@ -38,15 +39,15 @@
 
 @implementation DDAnnotation
 
-@synthesize placemark = _placemark;
-
 @synthesize coordinate = _coordinate; // property declared in MKAnnotation.h
+@synthesize title = _title;
+@synthesize placemark = _placemark;
 
 - (id)initWithCoordinate:(CLLocationCoordinate2D)coordinate title:(NSString*)title {
 	if (self = [super init]) {
 		[self changeCoordinate:coordinate];		
-		_title = [title retain];
-		_placemark = nil;
+		self.title = [title retain];
+		self.placemark = nil;
 	}
 	return self;
 }
@@ -61,10 +62,10 @@
 - (NSString *)subtitle {
 	NSString* subtitle = nil;
 	
-	if (_placemark) {
-		subtitle = [NSString stringWithFormat:@"%@, %@", _placemark.administrativeArea, _placemark.country];
+	if (self.placemark) {
+		subtitle = [NSString stringWithFormat:@"%@, %@", self.placemark.administrativeArea, self.placemark.country];
 	} else {
-		subtitle = [NSString stringWithFormat:@"%lf, %lf", _coordinate.latitude, _coordinate.longitude];
+		subtitle = [NSString stringWithFormat:@"%lf, %lf", self.coordinate.latitude, self.coordinate.longitude];
 	}
 	
 	return subtitle;
@@ -77,7 +78,7 @@
 	_coordinate = coordinate;
 	
 	// Try to reverse geocode here
-	MKReverseGeocoder *reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:_coordinate];
+	MKReverseGeocoder *reverseGeocoder = [[MKReverseGeocoder alloc] initWithCoordinate:self.coordinate];
 	reverseGeocoder.delegate = self;
 	[reverseGeocoder start];	
 }

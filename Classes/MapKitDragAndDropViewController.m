@@ -29,12 +29,20 @@
 #import "DDAnnotation.h"
 #import "DDAnnotationView.h"
 
+@interface MapKitDragAndDropViewController ()
+@property (nonatomic, retain) CLLocationManager *locationManager;
+@property (nonatomic, retain) MKReverseGeocoder *reverseGeocoder;
+@end
+
+
 #pragma mark -
 #pragma mark MapKitDragAndDropViewController implementation
 
 @implementation MapKitDragAndDropViewController
 
 @synthesize mapView = _mapView;
+@synthesize locationManager = _locationManager;
+@synthesize reverseGeocoder = _reverseGeocoder;
 
 #pragma mark -
 #pragma mark UIViewController overrides
@@ -43,12 +51,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];	
 
-	_mapView.showsUserLocation = YES;
+	self.mapView.showsUserLocation = YES;
 
 	// Start by locating current position
-	_locationManager = [[CLLocationManager alloc] init];
-	_locationManager.delegate = self;
-	[_locationManager startUpdatingLocation];	
+	self.locationManager = [[CLLocationManager alloc] init];
+	self.locationManager.delegate = self;
+	[self.locationManager startUpdatingLocation];	
 }
 
 #pragma mark -
@@ -58,7 +66,7 @@
 	
 	// Add annotation to map
 	DDAnnotation *annotation = [[DDAnnotation alloc] initWithCoordinate:newLocation.coordinate title:@"Drag to move Pin"];
-	[_mapView addAnnotation:annotation];
+	[self.mapView addAnnotation:annotation];
 	[annotation release];
 
 	// We only update location once, and let users to do the rest of the changes by dragging annotation to place they want
@@ -114,9 +122,9 @@
 }
 
 - (void)dealloc {
-	[_locationManager release];
-	[_reverseGeocoder release];
-    [_mapView release];
+	[_locationManager release], _locationManager = nil;
+	[_reverseGeocoder release], _reverseGeocoder = nil;
+    [_mapView release], _mapView = nil;
     [super dealloc];
 }
 
