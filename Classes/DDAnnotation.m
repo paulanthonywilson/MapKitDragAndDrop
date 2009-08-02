@@ -55,10 +55,6 @@
 #pragma mark -
 #pragma mark MKAnnotation Methods
 
-- (NSString *)title {
-	return _title;
-}
-
 - (NSString *)subtitle {
 	NSString* subtitle = nil;
 	
