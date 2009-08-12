@@ -31,6 +31,7 @@
 @interface DDAnnotation ()
 @property (nonatomic, retain) NSString *title;
 @property (nonatomic, retain) MKPlacemark *placemark;
+- (void)notifyCalloutInfo:(MKPlacemark *)placemark;
 @end
 
 
@@ -83,20 +84,24 @@
 #pragma mark MKReverseGeocoderDelegate methods
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFindPlacemark:(MKPlacemark *)placemark {
-	
-	self.placemark = placemark;
-	
-	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"MKAnnotationCalloutInfoDidChangeNotification" object:self]];
-	
+	[self notifyCalloutInfo:placemark];
 	[geocoder release];
 }
 
 - (void)reverseGeocoder:(MKReverseGeocoder *)geocoder didFailWithError:(NSError *)error {
-	self.placemark = nil;
-
-	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"MKAnnotationCalloutInfoDidChangeNotification" object:self]];
-	
+	[self notifyCalloutInfo:nil];
 	[geocoder release];
+}
+
+#pragma mark -
+#pragma mark MKAnnotationView Notification
+
+- (void)notifyCalloutInfo:(MKPlacemark *)placemark {
+	[self willChangeValueForKey:@"subtitle"]; // Workaround for SDK 3.0, otherwise callout info won't update.
+	self.placemark = placemark;
+	[self didChangeValueForKey:@"subtitle"]; // Workaround for SDK 3.0, otherwise callout info won't update.
+	
+	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"MKAnnotationCalloutInfoDidChangeNotification" object:self]];
 }
 
 #pragma mark -
